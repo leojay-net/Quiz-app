@@ -51,7 +51,7 @@ export const Question: React.FC<IQuestionFunctions> = ({ id, body, options, sele
                 </span>
                 <span className="text-left">{option}</span>
               </button>
-              <br></br></div>
+              <br></br> <p></p></div>
             ))}
           </div>
           <div className="flex justify-between w-full mt-4">
