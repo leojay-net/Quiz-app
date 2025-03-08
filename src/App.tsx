@@ -1,51 +1,31 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 
-import { Question, IQuestion } from './components/question';
+import { Question } from './components/question';
 import { questions } from './components/data';
+import { useQuestion } from './hooks/QuestionHook';
 
 function App() {
-  const [answers, setAnswers] = useState<{[key: number]: string} | null>(null);
-  const [question, setQuestion] = useState<IQuestion>(questions[0]);
-  let score = useRef<number>(0);
+  // const [answers, setAnswers] = useState<{[key: number]: string} | null>(null);
+  // const [question, setQuestion] = useState<IQuestion>(questions[0]);
+  // let score = useRef<number>(0);
   const [isOver, setIsOver] = useState<boolean>(false);
+  const {question, score, answers, _handleNextQuestion, _handlePrevQuestion, _handleOptionSelection} = useQuestion()
 
   useEffect(() => {
     console.log(score);
   });
 
   const handleNextQuestion = (oldId: number) => {
-    if (oldId < questions.length) {
-      const nextQuestion = questions.find(q => q.id === oldId + 1);
-      if (nextQuestion) {
-        setQuestion(nextQuestion);
-      }
-    }
+    _handleNextQuestion(oldId)
   };
 
   const handlePrevQuestion = (oldId: number) => {
-    if (oldId > 1) {
-      const prevQuestion = questions.find(q => q.id === oldId - 1);
-      if (prevQuestion) {
-        setQuestion(prevQuestion);
-      }
-    }
+    _handlePrevQuestion(oldId)
   };
 
   const handleOptionSelection = (option: string, oldId: number) => {
-    if (oldId >= 1 && oldId <= questions.length) {
-      let newAnswers = answers ? {...answers} : {};
-      newAnswers[oldId] = option;
-      setAnswers(newAnswers);
-      
-      let _score = 0;
-      questions.forEach((question) => {
-        if (newAnswers[question.id] && newAnswers[question.id] === question.answer) {
-          _score++;
-        }
-      });
-      score.current = _score;
-    }
+    _handleOptionSelection(option, oldId)
   };
 
   const handleScore = () => {
