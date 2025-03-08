@@ -1,6 +1,4 @@
-import { use, useEffect, useRef, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 import { Question, IQuestion } from './components/question'
@@ -12,7 +10,6 @@ import { questions } from './components/data'
 // }
 
 function App() {
-  const [count, setCount] = useState(0)
   const [answers, setAnswers] = useState<{[key: number]: string} | null>(null)
   const [question, setQuestion] = useState<IQuestion>(questions[0])
   let score = useRef<number>(0)
